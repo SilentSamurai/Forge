@@ -1,0 +1,16 @@
+name: Build
+steps:
+    -   step: Change Directory
+        type: basic.cd
+        path: .
+    -   step: Npm Build
+        type: cp.command
+        command:
+            - echo "hello"
+    -   step: Npm Profile Build
+        type: cp.profile.command
+        profiles:
+            -   profile: windows
+                command: echo "hello"
+            -   profile: macOS
+                command: echo "hello"
