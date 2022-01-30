@@ -26,7 +26,14 @@ export class CustomCommand implements Command {
 
     async process(context: Context, step: Step): Promise<void> {
         console.log("Cross platform command %s", step.command);
-        await Utility.execute(step.command);
+        if (Array.isArray(step.command)) {
+            for (const cmd of step.command) {
+                await Utility.execute(cmd);
+            }
+        }
+        if (typeof (step.command) === "string") {
+            await Utility.execute(step.command);
+        }
     }
 
 }

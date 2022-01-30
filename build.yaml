@@ -3,10 +3,17 @@ steps:
     -   step: Change Directory
         type: basic.cd
         path: .
-    -   step: Npm Build
+
+    -   step: Npm Multiple Build
         type: cp.command
         command:
             - echo "hello"
+            - echo "hello"
+
+    -   step: Npm Build
+        type: cp.command
+        command: echo "hello"
+
     -   step: Npm Profile Build
         type: cp.profile.command
         profiles:

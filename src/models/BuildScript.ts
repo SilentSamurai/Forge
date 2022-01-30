@@ -6,7 +6,7 @@ export interface ProfileBuild {
 export interface Step {
     step: string;
     type: string;
-    command: string;
+    command: string | string[];
     profiles: ProfileBuild[];
 }
 
