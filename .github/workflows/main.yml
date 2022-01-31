@@ -19,6 +19,7 @@ jobs:
                     registry-url: 'https://npm.pkg.github.com'
                     # Defaults to the user or organization that owns the workflows file
                     scope: 'SilentSamurai'
+            -   run: npm install
             -   run: npm run build
             -   run: npm run package
                 env:
