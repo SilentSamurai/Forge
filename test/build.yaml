@@ -1,8 +1,6 @@
 api: v1
 name: Module Build
-
 modules:
-
     -   name: module-a
         path: .
         steps:

@@ -26,6 +26,9 @@ export class Utility {
             if (printOutput) {
                 cmdProcess.stdout.pipe(process.stdout);
             }
+            cmdProcess.on('error', (error: Error) => {
+                reject(error);
+            });
             cmdProcess.on("close", () => {
                 resolve(output);
             });
