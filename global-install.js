@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const copyJob = {
-    "from": "build/cli/forge-win.exe",
+    "from": "bin/forge-win.exe",
     "to": "C:/tools/forge/forge.exe"
 }
 

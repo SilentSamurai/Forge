@@ -9,9 +9,11 @@ program.command("build")
     .option('-v, --values <valuesFile>', 'values file')
     .option('-p, --profile <profile>', 'values file')
     .action(async (args: string, options: { values: string, profile: string }) => {
-        console.log("running build with ", args, options);
         await executeScript(args, options.values, options.profile);
     });
 
+async function main() {
+    program.parse(process.argv);
+}
 
-program.parse(process.argv);
+main().catch(e => console.error(e));

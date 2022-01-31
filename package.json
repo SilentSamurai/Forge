@@ -14,7 +14,7 @@
     "pkg": {
         "scripts": "build/**/*.js",
         "output": "forge",
-        "outputPath": "build/cli"
+        "outputPath": "bin"
     },
     "repository": {
         "type": "git",

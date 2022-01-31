@@ -14,7 +14,7 @@ export class Utility {
             args = split.slice(1);
         }
 
-        console.info("executing: ", cmd, args);
+        console.debug("executing: ", cmd, args);
 
         return new Promise<string>(function (resolve: (value: (PromiseLike<string> | string)) => void,
                                              reject: (reason?: any) => void) {

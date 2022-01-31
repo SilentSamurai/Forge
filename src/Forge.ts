@@ -3,7 +3,7 @@ import * as Handlebars from "handlebars";
 import * as Yaml from "js-yaml";
 import {CdCommand} from "./commands/cd";
 import {CustomCommand, CustomProfileCommand} from "./commands/CustomCommand";
-import {BuildScript, Step} from "./models/BuildScript";
+import {BuildScript, Module, Step} from "./models/BuildScript";
 import {Command} from "./interfaces/Command";
 import {Context, ContextImpl} from "./interfaces/Context";
 import * as path from "path";
@@ -16,10 +16,20 @@ commands.set("cp.profile.command", new CustomProfileCommand());
 commands.set("cp.command", new CustomCommand());
 
 async function processScript(buildFileObject: BuildScript, context: Context) {
-    console.log("running script %s", chalk.green('"' + buildFileObject.name + '"'))
+    console.log("forging build %s", chalk.green('"' + buildFileObject.name + '"'));
+    for (let module of buildFileObject.modules) {
+        // @ts-ignore
+        const command: Command = commands.get("basic.cd");
+        await command.process(context, {path: module.path} as any);
+        await processModule(module, context);
+    }
+    console.log(chalk.green('"' + buildFileObject.name + '"'), "artifact(s) forged.")
+}
+
+async function processModule(module: Module, context: Context) {
+    console.log("forging module %s", chalk.green('"' + module.name + '"'))
     let step: Step;
-    for (step of buildFileObject.steps) {
-        console.log("")
+    for (step of module.steps) {
         console.log("--> executing step %s", chalk.green('"' + step.step + '"'));
         const command: Command | undefined = commands.get(step.type);
         if (command != null) {
@@ -28,7 +38,7 @@ async function processScript(buildFileObject: BuildScript, context: Context) {
             console.log("step type %s unknown", step.type);
         }
     }
-    console.log(chalk.green('"' + buildFileObject.name + '"'), "artifact(s) forged.")
+    console.log(chalk.green('"' + module.name + '"'), "module forged.")
 }
 
 

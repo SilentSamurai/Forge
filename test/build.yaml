@@ -1,10 +1,25 @@
-name: Build
-steps:
-    -   step: Change Directory
-        type: basic.cd
-        path: module
+api: v1
+name: Module Build
 
-    -   step: Npm Multiple Build
-        type: cp.command
-        command:
-            - forge build build.yaml
+modules:
+
+    -   name: module-a
+        path: .
+        steps:
+            -   step: Npm Multiple Build
+                type: cp.command
+                command:
+                    - echo "hello"
+                    - echo "hello"
+
+            -   step: Npm Build
+                type: cp.command
+                command: echo "hello"
+
+            -   step: Npm Profile Build
+                type: cp.profile.command
+                profiles:
+                    -   profile: windows
+                        command: echo "hello"
+                    -   profile: macOS
+                        command: echo "hello"

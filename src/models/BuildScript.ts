@@ -10,7 +10,13 @@ export interface Step {
     profiles: ProfileBuild[];
 }
 
+export interface Module {
+    name: string;
+    path: string;
+    steps: Step[];
+}
+
 export interface BuildScript {
     name: string;
-    steps: Step[];
+    modules: Module[];
 }
