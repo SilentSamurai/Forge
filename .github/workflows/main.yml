@@ -22,5 +22,9 @@ jobs:
             -   run: npm install
             -   run: npm run build
             -   run: npm run package
+            -   name: Upload the artifacts
+                uses: skx/github-action-publish-binaries@master
                 env:
-                    NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                    args: 'build/cli/forge*'
