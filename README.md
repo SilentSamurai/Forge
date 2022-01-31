@@ -83,3 +83,9 @@ moduleA:
     environment: production
     imageName: username/image-name
 ```
+
+### command to run the build
+
+```shell
+forge build example.yaml -v values.yaml
+```
