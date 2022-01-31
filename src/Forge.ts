@@ -27,7 +27,7 @@ async function processScript(buildFileObject: BuildScript, context: Context) {
             console.log("step type %s unknown", step.type);
         }
     }
-    console.log("artifact(s) forged.")
+    console.log(chalk.green('"' + buildFileObject.name + '"'), "artifact(s) forged.")
 }
 
 
