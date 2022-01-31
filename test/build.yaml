@@ -1,0 +1,10 @@
+name: Build
+steps:
+    -   step: Change Directory
+        type: basic.cd
+        path: module
+
+    -   step: Npm Multiple Build
+        type: cp.command
+        command:
+            - forge build build.yaml

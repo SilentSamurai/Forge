@@ -6,6 +6,7 @@ import {CustomCommand, CustomProfileCommand} from "./commands/CustomCommand";
 import {BuildScript, Step} from "./models/BuildScript";
 import {Command} from "./interfaces/Command";
 import {Context, ContextImpl} from "./interfaces/Context";
+import * as path from "path";
 
 const chalk = require("chalk");
 
@@ -46,7 +47,8 @@ export async function executeScript(buildScript: string, valuesYaml: string, pro
     const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
 
     const context = new ContextImpl();
-    context.setCwd(process.cwd())
+    let buildpath = path.join(process.cwd(), buildScript);
+    context.setCwd(path.dirname(buildpath))
     context.setProfile(profile);
 
     await processScript(buildFile, context);
