@@ -78,7 +78,7 @@ modules:
 ### values.yaml
 
 ```yaml
-## modileA
+## moduleA
 moduleA:
     environment: production
     imageName: username/image-name
