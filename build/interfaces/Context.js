@@ -4,7 +4,6 @@ exports.ContextImpl = void 0;
 var ContextImpl = /** @class */ (function () {
     function ContextImpl() {
     }
-
     ContextImpl.prototype.setCwd = function (path) {
         this.currentCwd = path;
     };

@@ -5,7 +5,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             resolve(value);
         });
     }
-
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) {
             try {
@@ -113,7 +112,6 @@ var utility_1 = require("../utility/utility");
 var CustomProfileCommand = /** @class */ (function () {
     function CustomProfileCommand() {
     }
-
     CustomProfileCommand.prototype.process = function (context, step) {
         return __awaiter(this, void 0, void 0, function () {
             var _i, _a, profileBuild;
@@ -152,7 +150,6 @@ exports.CustomProfileCommand = CustomProfileCommand;
 var CustomCommand = /** @class */ (function () {
     function CustomCommand() {
     }
-
     CustomCommand.prototype.process = function (context, step) {
         return __awaiter(this, void 0, void 0, function () {
             var _i, _a, cmd;

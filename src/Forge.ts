@@ -15,6 +15,7 @@ commands.set("cp.profile.command", new CustomProfileCommand());
 commands.set("cp.command", new CustomCommand());
 
 async function processScript(buildFileObject: BuildScript, context: Context) {
+    console.log("")
     console.log("running script %s", chalk.green('"' + buildFileObject.name + '"'))
     let step: Step;
     for (step of buildFileObject.steps) {

@@ -28,7 +28,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             resolve(value);
         });
     }
-
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) {
             try {
@@ -143,13 +142,13 @@ var commands = new Map();
 commands.set("basic.cd", new cd_1.CdCommand());
 commands.set("cp.profile.command", new CustomCommand_1.CustomProfileCommand());
 commands.set("cp.command", new CustomCommand_1.CustomCommand());
-
 function processScript(buildFileObject, context) {
     return __awaiter(this, void 0, void 0, function () {
         var step, _i, _a, command;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    console.log("");
                     console.log("running script %s", chalk.green('"' + buildFileObject.name + '"'));
                     _i = 0, _a = buildFileObject.steps;
                     _b.label = 1;

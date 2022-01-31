@@ -7,7 +7,6 @@ var path = require('path');
 var Utility = /** @class */ (function () {
     function Utility() {
     }
-
     Utility.execShellCommand = function (cmd, args, printOutput) {
         // console.info("executing: ", cmd);
         if (printOutput === void 0) {
