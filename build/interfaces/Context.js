@@ -1,23 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", {value: true});
 exports.ContextImpl = void 0;
+var ContextImpl = /** @class */ (function () {
+    function ContextImpl() {
+    }
 
-class ContextImpl {
-    setCwd(path) {
+    ContextImpl.prototype.setCwd = function (path) {
         this.currentCwd = path;
-    }
-
-    setProfile(profile) {
+    };
+    ContextImpl.prototype.setProfile = function (profile) {
         this.profile = profile;
-    }
-
-    getCwd() {
+    };
+    ContextImpl.prototype.getCwd = function () {
         return this.currentCwd;
-    }
-
-    getProfile() {
+    };
+    ContextImpl.prototype.getProfile = function () {
         return this.profile;
-    }
-}
-
+    };
+    return ContextImpl;
+}());
 exports.ContextImpl = ContextImpl;

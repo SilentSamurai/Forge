@@ -1,60 +1,60 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", {value: true});
 exports.Utility = void 0;
-const fs = require('fs');
-const {spawn} = require("child_process");
-const path = require('path');
+var fs = require('fs');
+var spawn = require("child_process").spawn;
+var path = require('path');
+var Utility = /** @class */ (function () {
+    function Utility() {
+    }
 
-class Utility {
-    static execShellCommand(cmd, args, printOutput = true) {
+    Utility.execShellCommand = function (cmd, args, printOutput) {
         // console.info("executing: ", cmd);
+        if (printOutput === void 0) {
+            printOutput = true;
+        }
         if (args == null) {
-            let split = cmd.split(" ");
+            var split = cmd.split(" ");
             cmd = split[0];
             args = split.slice(1);
         }
         console.info("executing: ", cmd, args);
         return new Promise(function (resolve, reject) {
-            const cmdProcess = spawn(cmd, args, {stdio: [process.stdin, "pipe", process.stderr], shell: true});
-            let output = "";
-            cmdProcess.stdout.on("data", (data) => {
-                output += `${data}`;
+            var cmdProcess = spawn(cmd, args, {stdio: [process.stdin, "pipe", process.stderr], shell: true});
+            var output = "";
+            cmdProcess.stdout.on("data", function (data) {
+                output += "".concat(data);
             });
             if (printOutput) {
                 cmdProcess.stdout.pipe(process.stdout);
             }
-            cmdProcess.on("close", () => {
+            cmdProcess.on("close", function () {
                 resolve(output);
             });
         });
-    }
-
-    static executeWithArgs(cmd, args) {
+    };
+    Utility.executeWithArgs = function (cmd, args) {
         return this.execShellCommand(cmd, args);
-    }
-
-    static execute(cmd) {
+    };
+    Utility.execute = function (cmd) {
         return this.execShellCommand(cmd, null);
-    }
-
-    static pathExists(path) {
+    };
+    Utility.pathExists = function (path) {
         return fs.existsSync(path);
-    }
-
-    static createDirectories(pathname) {
-        const __dirname = path.resolve();
+    };
+    Utility.createDirectories = function (pathname) {
+        var __dirname = path.resolve();
         pathname = pathname.replace(/^\.*\/|\/?[^\/]+\.[a-z0-9]+|\/$/g, '');
-        fs.mkdirSync(path.resolve(__dirname, pathname), {recursive: true}, (e) => {
+        fs.mkdirSync(path.resolve(__dirname, pathname), {recursive: true}, function (e) {
             if (e) {
                 console.error(e);
             } else {
                 console.log('Success');
             }
         });
-    }
-
-    static copyFileSync(source, target) {
-        let targetFile = target;
+    };
+    Utility.copyFileSync = function (source, target) {
+        var targetFile = target;
         // If target is a directory, a new file with the same name will be created
         if (fs.existsSync(target)) {
             if (fs.lstatSync(target).isDirectory()) {
@@ -62,14 +62,13 @@ class Utility {
             }
         }
         fs.writeFileSync(targetFile, fs.readFileSync(source));
-    }
-
-    static getAllFiles(source, ext, outFiles) {
-        let that = this;
+    };
+    Utility.getAllFiles = function (source, ext, outFiles) {
+        var that = this;
         if (fs.lstatSync(source).isDirectory()) {
-            let files = fs.readdirSync(source);
+            var files = fs.readdirSync(source);
             files.forEach(function (file) {
-                let curSource = path.join(source, file);
+                var curSource = path.join(source, file);
                 if (fs.lstatSync(curSource).isDirectory()) {
                     that.getAllFiles(curSource, ext, outFiles);
                 } else {
@@ -79,26 +78,24 @@ class Utility {
                 }
             });
         }
-    }
-
-    static copyFilesRecursively(source, target, ext) {
-        let files = [];
+    };
+    Utility.copyFilesRecursively = function (source, target, ext) {
+        var files = [];
         this.getAllFiles(source, ext, files);
-        let that = this;
-        let targetFolder = path.resolve(target);
+        var that = this;
+        var targetFolder = path.resolve(target);
         if (!fs.existsSync(targetFolder)) {
             fs.mkdirSync(targetFolder);
         }
-        files.forEach(file => {
+        files.forEach(function (file) {
             that.copyFileSync(file, targetFolder);
         });
-    }
-
-    static copyFolderRecursiveSync(source, target, ext) {
-        let files = [];
-        let that = this;
+    };
+    Utility.copyFolderRecursiveSync = function (source, target, ext) {
+        var files = [];
+        var that = this;
         // Check if folder needs to be created or integrated
-        let targetFolder = path.join(target, path.basename(source));
+        var targetFolder = path.join(target, path.basename(source));
         if (!fs.existsSync(targetFolder)) {
             fs.mkdirSync(targetFolder);
         }
@@ -106,7 +103,7 @@ class Utility {
         if (fs.lstatSync(source).isDirectory()) {
             files = fs.readdirSync(source);
             files.forEach(function (file) {
-                let curSource = path.join(source, file);
+                var curSource = path.join(source, file);
                 if (fs.lstatSync(curSource).isDirectory()) {
                     that.copyFolderRecursiveSync(curSource, targetFolder, ext);
                 } else {
@@ -116,7 +113,7 @@ class Utility {
                 }
             });
         }
-    }
-}
-
+    };
+    return Utility;
+}());
 exports.Utility = Utility;

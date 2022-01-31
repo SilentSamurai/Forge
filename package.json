@@ -1,19 +1,17 @@
 {
-    "bin": {
-        "forge": "./build/main.js"
-    },
     "name": "forge",
     "version": "1.0.0",
     "description": "cross platform build tool",
     "main": "main.ts",
     "scripts": {
         "build": "npx tsc",
-        "package": "pkg . --output forge",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "package": "pkg . --force-overwrite ",
+        "global-install": "npm i -g",
         "main": "ts-node src/main.ts build build.yaml -p windows"
     },
     "pkg": {
-        "scripts": "build/**/*.js"
+        "scripts": "build/**/*.js",
+        "outputPath": "build/forge"
     },
     "repository": {
         "type": "git",
@@ -32,6 +30,7 @@
     },
     "devDependencies": {
         "@types/node": "^12.20.42",
+        "copyfiles": "^2.4.1",
         "pkg": "^5.5.2",
         "ts-node": "^10.4.0",
         "typescript": "^4.5.4"
@@ -42,6 +41,7 @@
         "@types/js-yaml": "^4.0.5",
         "chalk": "^4.1.2",
         "commander": "^8.3.0",
+        "copy-files-from-to": "^3.2.2",
         "handlebars": "^4.7.7",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.1"

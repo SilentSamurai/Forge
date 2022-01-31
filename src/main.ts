@@ -2,9 +2,6 @@ import {executeScript} from "./Forge";
 
 const {program} = require('commander');
 
-async function main() {
-    program.parse(process.argv);
-}
 
 program.command("build")
     .description('Cross Platform Build Tools')
@@ -17,4 +14,4 @@ program.command("build")
     });
 
 
-main().catch(e => console.error(e));
+program.parse(process.argv);
