@@ -3,7 +3,6 @@
 cross-platform build tool
 
 ![example workflow](https://github.com/SilentSamurai/Forge/actions/workflows/main.yml/badge.svg)
-<BR>
 
 ### Example Build Script
 
@@ -36,4 +35,51 @@ modules:
                     - minikube start
                     - helm install backend backend
 
+```
+
+### command to run the build
+
+```shell
+forge build example.yaml
+```
+
+### script the build file
+
+```yaml
+api: v1
+name: Build
+modules:
+    -   name: Backend
+        path: backend
+        steps:
+            -   step: Build War & Docker Image
+                type: cp.command
+                command:
+                    - mvn clean install -P=local
+                    - docker build . -t {{ moduleA.imageName }}
+    -   name: Frontend
+        path: frontend
+        steps:
+            -   step: Build Frontend
+                type: cp.command
+                command:
+                    - echo "test"
+
+    -   name: Helm Charts
+        path: helm-charts
+        steps:
+            -   step: Helm Backend
+                type: cp.command
+                command:
+                    - minikube start
+                    - helm install backend backend
+```
+
+### values.yaml
+
+```yaml
+## modileA
+moduleA:
+    environment: production
+    imageName: username/image-name
 ```

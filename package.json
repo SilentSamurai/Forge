@@ -9,7 +9,7 @@
         "package": "pkg . --force-overwrite ",
         "global-install": "node global-install.js",
         "update-forge": "npm run build && npm run package && npm run global-install",
-        "main": "ts-node src/main.ts build test/build.yaml -p windows"
+        "main": "ts-node src/main.ts build test/build.yaml -p windows -v test/values.yaml"
     },
     "pkg": {
         "scripts": "build/**/*.js",

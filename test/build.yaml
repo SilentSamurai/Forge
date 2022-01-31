@@ -7,7 +7,7 @@ modules:
             -   step: Npm Multiple Build
                 type: cp.command
                 command:
-                    - echo "hello"
+                    - echo {{ moduleA.environment }}
                     - echo "hello"
 
             -   step: Npm Build
