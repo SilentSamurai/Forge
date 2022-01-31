@@ -6,11 +6,11 @@ const copyJob = {
     "to": "C:/tools/forge/forge.exe"
 }
 
-let targetFile = copyJob.from;
+let targetFile = copyJob.to;
 // If target is a directory, a new file with the same name will be created
-if (fs.existsSync(copyJob.from)) {
-    if (fs.lstatSync(copyJob.from).isDirectory()) {
-        targetFile = path.join(copyJob.from, path.basename(copyJob.to));
+if (fs.existsSync(copyJob.to)) {
+    if (fs.lstatSync(copyJob.to).isDirectory()) {
+        targetFile = path.join(copyJob.to, path.basename(copyJob.from));
     }
 }
-fs.writeFileSync(targetFile, fs.readFileSync(copyJob.to));
+fs.writeFileSync(targetFile, fs.readFileSync(copyJob.from));

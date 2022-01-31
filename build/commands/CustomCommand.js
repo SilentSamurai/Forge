@@ -109,9 +109,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", {value: true});
 exports.CustomCommand = exports.CustomProfileCommand = void 0;
 var utility_1 = require("../utility/utility");
+var chalk = require('chalk');
 var CustomProfileCommand = /** @class */ (function () {
     function CustomProfileCommand() {
     }
+
     CustomProfileCommand.prototype.process = function (context, step) {
         return __awaiter(this, void 0, void 0, function () {
             var _i, _a, profileBuild;
@@ -125,7 +127,9 @@ var CustomProfileCommand = /** @class */ (function () {
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         profileBuild = _a[_i];
                         if (!(context.getProfile() === profileBuild.profile)) return [3 /*break*/, 3];
-                        console.log("Profile %s", profileBuild.profile);
+                        console.log("");
+                        console.log("profile %s", profileBuild.profile);
+                        console.log("--> executing command %s", chalk.green(step.command));
                         return [4 /*yield*/, utility_1.Utility.execute(profileBuild.command)];
                     case 2:
                         _b.sent();
@@ -156,13 +160,14 @@ var CustomCommand = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        console.log("Cross platform command %s", step.command);
                         if (!Array.isArray(step.command)) return [3 /*break*/, 4];
                         _i = 0, _a = step.command;
                         _b.label = 1;
                     case 1:
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         cmd = _a[_i];
+                        console.log("");
+                        console.log("--> executing command %s", chalk.green(step.command));
                         return [4 /*yield*/, utility_1.Utility.execute(cmd)];
                     case 2:
                         _b.sent();
@@ -172,6 +177,8 @@ var CustomCommand = /** @class */ (function () {
                         return [3 /*break*/, 1];
                     case 4:
                         if (!(typeof (step.command) === "string")) return [3 /*break*/, 6];
+                        console.log("");
+                        console.log("--> executing command %s", chalk.green(step.command));
                         return [4 /*yield*/, utility_1.Utility.execute(step.command)];
                     case 5:
                         _b.sent();

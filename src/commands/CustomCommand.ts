@@ -3,6 +3,8 @@ import {Context} from "../interfaces/Context";
 import {Utility} from "../utility/utility";
 import {Step} from "../models/BuildScript";
 
+const chalk = require('chalk');
+
 
 export class CustomProfileCommand implements Command {
 
@@ -10,7 +12,9 @@ export class CustomProfileCommand implements Command {
         if (context.getProfile() != null) {
             for (const profileBuild of step.profiles) {
                 if (context.getProfile() === profileBuild.profile) {
-                    console.log("Profile %s", profileBuild.profile);
+                    console.log("");
+                    console.log("profile %s", profileBuild.profile);
+                    console.log("--> executing command %s", chalk.green(step.command));
                     await Utility.execute(profileBuild.command);
                 }
             }
@@ -25,13 +29,17 @@ export class CustomProfileCommand implements Command {
 export class CustomCommand implements Command {
 
     async process(context: Context, step: Step): Promise<void> {
-        console.log("Cross platform command %s", step.command);
+
         if (Array.isArray(step.command)) {
             for (const cmd of step.command) {
+                console.log("");
+                console.log("--> executing command %s", chalk.green(step.command));
                 await Utility.execute(cmd);
             }
         }
         if (typeof (step.command) === "string") {
+            console.log("");
+            console.log("--> executing command %s", chalk.green(step.command));
             await Utility.execute(step.command);
         }
     }

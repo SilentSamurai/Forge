@@ -148,13 +148,13 @@ function processScript(buildFileObject, context) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    console.log("");
                     console.log("running script %s", chalk.green('"' + buildFileObject.name + '"'));
                     _i = 0, _a = buildFileObject.steps;
                     _b.label = 1;
                 case 1:
                     if (!(_i < _a.length)) return [3 /*break*/, 5];
                     step = _a[_i];
+                    console.log("");
                     console.log("--> executing step %s", chalk.green('"' + step.step + '"'));
                     command = commands.get(step.type);
                     if (!(command != null)) return [3 /*break*/, 3];
