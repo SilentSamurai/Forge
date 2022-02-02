@@ -40,6 +40,7 @@ async function processModule(module: Module, context: Context) {
             await command.process(context, step);
         } else {
             console.log("step type %s unknown", step.type);
+            throw new Error("unknown step " + step.type);
         }
     }
     console.log(chalk.green('"' + module.name + '"'), "module forged.")
