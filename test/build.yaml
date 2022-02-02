@@ -19,6 +19,7 @@ modules:
                 condition:
                     command: echo "ulalalallalala loop"
                     contains: loop
+                    notContains: loop
                 command: echo "Loop is present"
 
             -   step: Npm Environment Build

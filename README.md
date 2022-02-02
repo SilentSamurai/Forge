@@ -19,7 +19,7 @@ modules:
                     - mvn clean install -P=local
                     - docker build . -t sd25/ims-backend
 
-    -   name: conditional command
+    -   name: Frondend
         path: frontend
         steps:
             -   step: Add environment variables
@@ -32,6 +32,7 @@ modules:
                 condition:
                     command: echo $stage
                     contains: production
+                    notContains: dev
                 command: 
                     - npm i 
                     - npm build

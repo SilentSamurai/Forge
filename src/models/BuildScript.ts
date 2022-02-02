@@ -5,6 +5,7 @@ export interface ProfileBuild {
 
 export interface Condition {
     contains: string;
+    notContains: string;
     command: string;
 }
 

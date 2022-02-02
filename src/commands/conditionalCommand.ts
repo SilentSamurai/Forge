@@ -7,7 +7,10 @@ import {executeCommand} from "./customCommand";
 export class ConditionalCommand implements Command {
     async process(context: Context, step: Step): Promise<void> {
         let output = await Utility.execute(step.condition.command);
-        if (output.includes(step.condition.contains)) {
+        let cond = (step.condition.contains != null && output.includes(step.condition.contains))
+            || (step.condition.notContains != null && !output.includes(step.condition.notContains));
+
+        if (cond) {
             await executeCommand(step.command);
         }
     }
