@@ -14,23 +14,34 @@ modules:
         path: backend
         steps:
             -   step: Build War & Docker Image
-                type: cp.command
+                type: basic.command
                 command:
                     - mvn clean install -P=local
                     - docker build . -t sd25/ims-backend
-    -   name: Frontend
+
+    -   name: conditional command
         path: frontend
         steps:
-            -   step: Build Frontend
-                type: cp.command
-                command:
-                    - echo "test"
+            -   step: Add environment variables
+                type: basic.env
+                envVariables:
+                    stage: production
+
+            -   step: Conditional Command
+                type: asic.command.condition
+                condition:
+                    command: echo $stage
+                    contains: production
+                command: 
+                    - npm i 
+                    - npm build
+                    - npm publish
 
     -   name: Helm Charts
         path: helm-charts
         steps:
             -   step: Helm Backend
-                type: cp.command
+                type: basic.command
                 command:
                     - minikube start
                     - helm install backend backend
@@ -53,23 +64,16 @@ modules:
         path: backend
         steps:
             -   step: Build War & Docker Image
-                type: cp.command
+                type: basic.command
                 command:
                     - mvn clean install -P=local
                     - docker build . -t {{ moduleA.imageName }}
-    -   name: Frontend
-        path: frontend
-        steps:
-            -   step: Build Frontend
-                type: cp.command
-                command:
-                    - echo "test"
 
     -   name: Helm Charts
         path: helm-charts
         steps:
             -   step: Helm Backend
-                type: cp.command
+                type: basic.command
                 command:
                     - minikube start
                     - helm install backend backend
