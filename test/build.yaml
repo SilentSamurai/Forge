@@ -18,8 +18,8 @@ modules:
                 type: basic.command.condition
                 condition:
                     command: echo "ulalalallalala loop"
-                    contains: loop
-                    notContains: loop
+                    not:
+                        exitcode: 0
                 command: echo "Loop is present"
 
             -   step: Npm Environment Build

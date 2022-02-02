@@ -5,8 +5,9 @@ export interface ProfileBuild {
 
 export interface Condition {
     contains: string;
-    notContains: string;
+    exitCode: number;
     command: string;
+    not: Condition;
 }
 
 export interface Step {
