@@ -28,7 +28,7 @@ modules:
                     stage: production
 
             -   step: Conditional Command
-                type: asic.command.condition
+                type: basic.command.condition
                 condition:
                     command: echo $stage
                     contains: production
