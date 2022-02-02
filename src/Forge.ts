@@ -53,18 +53,23 @@ function loadValues(filePath: string) {
 }
 
 export async function executeScript(buildScript: string, valuesYaml: string, profile: string) {
-    const values = valuesYaml != null ? await loadValues(valuesYaml) : {};
+    try {
+        const values = valuesYaml != null ? await loadValues(valuesYaml) : {};
 
-    const yamlFile = fs.readFileSync(buildScript, {encoding: 'utf-8'})
-    const yamlTemplate = Handlebars.compile(yamlFile);
-    const resultYamlFile = yamlTemplate(values);
+        const yamlFile = fs.readFileSync(buildScript, {encoding: 'utf-8'})
+        const yamlTemplate = Handlebars.compile(yamlFile);
+        const resultYamlFile = yamlTemplate(values);
 
-    const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
+        const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
 
-    const context = new ContextImpl();
-    let buildpath = path.join(process.cwd(), buildScript);
-    context.setCwd(path.dirname(buildpath))
-    context.setProfile(profile);
+        const context = new ContextImpl();
+        let buildpath = path.join(process.cwd(), buildScript);
+        context.setCwd(path.dirname(buildpath))
+        context.setProfile(profile);
 
-    await processScript(buildFile, context);
+        await processScript(buildFile, context);
+    } catch (e: any) {
+        console.error(chalk.red(e.message));
+    }
+
 }

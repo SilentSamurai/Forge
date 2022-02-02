@@ -5,7 +5,6 @@ import {splitSpacesExcludeQuotes} from 'quoted-string-space-split';
 
 export class ExecutionOutput {
 
-
     error: Error | null;
     cmdProcess: any;
     output: string;

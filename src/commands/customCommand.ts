@@ -11,7 +11,7 @@ export async function executeCommand(commands: string | string[]) {
             console.log("--> executing command %s", chalk.green(cmd));
             let executionOutput = await Utility.execute(cmd);
             if (executionOutput.cmdProcess.exitCode != 0) {
-                throw new Error("build process stopped.");
+                throw new Error("command returned non zero exit code.");
             }
         }
     }
@@ -19,7 +19,7 @@ export async function executeCommand(commands: string | string[]) {
         console.log("--> executing command %s", chalk.green(commands));
         let executionOutput = await Utility.execute(commands);
         if (executionOutput.cmdProcess.exitCode != 0) {
-            throw new Error("build process stopped.");
+            throw new Error("command returned non zero exit code.");
         }
     }
 }
@@ -39,7 +39,6 @@ export class CustomProfileCommand implements Command {
             console.log("profile not found");
         }
     }
-
 }
 
 export class CustomCommand implements Command {
