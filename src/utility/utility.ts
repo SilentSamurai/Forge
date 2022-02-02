@@ -1,6 +1,7 @@
 const fs = require('fs');
 const {spawn} = require("child_process");
 const path = require('path');
+import {splitSpacesExcludeQuotes} from 'quoted-string-space-split';
 
 
 export class Utility {
@@ -9,7 +10,7 @@ export class Utility {
         // console.info("executing: ", cmd);
 
         if (args == null) {
-            let split = cmd.split(" ");
+            const split = splitSpacesExcludeQuotes(cmd);
             cmd = split[0]
             args = split.slice(1);
         }

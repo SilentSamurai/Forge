@@ -2,18 +2,22 @@ import * as fs from "fs";
 import * as Handlebars from "handlebars";
 import * as Yaml from "js-yaml";
 import {CdCommand} from "./commands/cd";
-import {CustomCommand, CustomProfileCommand} from "./commands/CustomCommand";
+import {CustomCommand, CustomProfileCommand} from "./commands/customCommand";
 import {BuildScript, Module, Step} from "./models/BuildScript";
 import {Command} from "./interfaces/Command";
 import {Context, ContextImpl} from "./interfaces/Context";
 import * as path from "path";
+import {Environment} from "./commands/environment";
+import {ConditionalCommand} from "./commands/conditionalCommand";
 
 const chalk = require("chalk");
 
 const commands: Map<string, Command> = new Map<string, Command>();
 commands.set("basic.cd", new CdCommand());
-commands.set("cp.profile.command", new CustomProfileCommand());
-commands.set("cp.command", new CustomCommand());
+commands.set("basic.profile.command", new CustomProfileCommand());
+commands.set("basic.command", new CustomCommand());
+commands.set("basic.env", new Environment());
+commands.set("basic.command.condition", new ConditionalCommand());
 
 async function processScript(buildFileObject: BuildScript, context: Context) {
     console.log("forging build %s", chalk.green('"' + buildFileObject.name + '"'));

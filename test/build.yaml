@@ -5,17 +5,35 @@ modules:
         path: .
         steps:
             -   step: Npm Multiple Build
-                type: cp.command
+                type: basic.command
                 command:
                     - echo {{ moduleA.environment }}
                     - echo "hello"
 
             -   step: Npm Build
-                type: cp.command
+                type: basic.command
                 command: echo "hello"
 
+            -   step: Npm Build
+                type: basic.command.condition
+                condition:
+                    command: echo "ulalalallalala loop"
+                    contains: loop
+                command: echo "Loop is present"
+
+            -   step: Npm Environment Build
+                type: basic.env
+                envVariables:
+                    APPLE: pie
+                    HAPPY: go
+
+            -   step: Npm Build
+                type: basic.command
+                condition:
+                command: echo $APPLE
+
             -   step: Npm Profile Build
-                type: cp.profile.command
+                type: basic.profile.command
                 profiles:
                     -   profile: windows
                         command: echo "hello"

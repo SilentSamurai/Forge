@@ -1,5 +1,10 @@
 export interface ProfileBuild {
     profile: string;
+    command: string | string[];
+}
+
+export interface Condition {
+    contains: string;
     command: string;
 }
 
@@ -8,6 +13,8 @@ export interface Step {
     type: string;
     command: string | string[];
     profiles: ProfileBuild[];
+    envVariables: { [key: string]: string };
+    condition: Condition;
 }
 
 export interface Module {
