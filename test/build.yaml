@@ -19,7 +19,10 @@ modules:
                 condition:
                     command: echo "ulalalallalala loop"
                     not:
+                        contains: loop
                         exitcode: 0
+                    contains: loop
+                    exitcode: 0
                 command: echo "Loop is present"
 
             -   step: Npm Environment Build

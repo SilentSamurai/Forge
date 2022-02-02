@@ -30,9 +30,12 @@ modules:
             -   step: Conditional Command
                 type: basic.command.condition
                 condition:
-                    command: echo $stage
-                    contains: production
-                    notContains: dev
+                    command: echo "ulalalallalala loop"
+                    not:
+                        contains: loop
+                        exitcode: 0
+                    contains: loop
+                    exitcode: 0
                 command: 
                     - npm i 
                     - npm build
