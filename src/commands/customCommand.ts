@@ -9,12 +9,18 @@ export async function executeCommand(commands: string | string[]) {
     if (Array.isArray(commands)) {
         for (const cmd of commands) {
             console.log("--> executing command %s", chalk.green(cmd));
-            await Utility.execute(cmd);
+            let executionOutput = await Utility.execute(cmd);
+            if (executionOutput.cmdProcess.exitCode != 0) {
+                throw new Error("build process stopped.");
+            }
         }
     }
     if (typeof (commands) === "string") {
         console.log("--> executing command %s", chalk.green(commands));
-        await Utility.execute(commands);
+        let executionOutput = await Utility.execute(commands);
+        if (executionOutput.cmdProcess.exitCode != 0) {
+            throw new Error("build process stopped.");
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 import {executeScript} from "./Forge";
+import chalk from "chalk";
 
 const {program} = require('commander');
 
@@ -16,4 +17,4 @@ async function main() {
     program.parse(process.argv);
 }
 
-main().catch(e => console.error(e));
+main().catch((e: Error) => console.error(chalk.red(e.message)));

@@ -3,10 +3,23 @@ const {spawn} = require("child_process");
 const path = require('path');
 import {splitSpacesExcludeQuotes} from 'quoted-string-space-split';
 
+export class ExecutionOutput {
+
+
+    error: Error | null;
+    cmdProcess: any;
+    output: string;
+
+    constructor(cmdProcess: any, output: string, error: Error | null) {
+        this.cmdProcess = cmdProcess;
+        this.output = output;
+        this.error = error;
+    }
+}
 
 export class Utility {
 
-    public static execShellCommand(cmd: string, args: Array<string> | null, printOutput: boolean = true): Promise<string> {
+    public static execShellCommand(cmd: string, args: Array<string> | null, printOutput: boolean = true): Promise<ExecutionOutput> {
         // console.info("executing: ", cmd);
 
         if (args == null) {
@@ -17,8 +30,7 @@ export class Utility {
 
         console.debug("executing: ", cmd, args);
 
-        return new Promise<string>(function (resolve: (value: (PromiseLike<string> | string)) => void,
-                                             reject: (reason?: any) => void) {
+        return new Promise<ExecutionOutput>((resolve, reject) => {
             const cmdProcess = spawn(cmd, args, {stdio: [process.stdin, "pipe", process.stderr], shell: true});
             let output = "";
             cmdProcess.stdout.on("data", (data: string) => {
@@ -28,11 +40,12 @@ export class Utility {
                 cmdProcess.stdout.pipe(process.stdout);
             }
             cmdProcess.on('error', (error: Error) => {
-                reject(error);
+                reject(new ExecutionOutput(cmdProcess, output, error));
             });
             cmdProcess.on("close", () => {
-                resolve(output);
+                resolve(new ExecutionOutput(cmdProcess, output, null));
             });
+
         });
     }
 
