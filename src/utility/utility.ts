@@ -27,7 +27,7 @@ export class Utility {
             args = split.slice(1);
         }
 
-        console.debug("executing: ", cmd, args);
+        // console.debug("executing: ", cmd, args);
 
         return new Promise<ExecutionOutput>((resolve, reject) => {
             const cmdProcess = spawn(cmd, args, {stdio: [process.stdin, "pipe", process.stderr], shell: true});

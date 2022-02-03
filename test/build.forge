@@ -1,0 +1,14 @@
+
+
+
+async function ModuleA() {
+    await cd("moduleA");
+    await execute("echo apple-pei");
+    await set_env("Apple", "pie");
+    await execute("echo $Apple");
+
+}
+
+
+await ModuleA();
+// ModuleA()

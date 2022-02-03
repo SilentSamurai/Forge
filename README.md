@@ -17,7 +17,7 @@ modules:
                 type: basic.command
                 command:
                     - mvn clean install -P=local
-                    - docker build . -t sd25/ims-backend
+                    - docker yaml . -t sd25/ims-backend
 
     -   name: Frondend
         path: frontend
@@ -38,7 +38,7 @@ modules:
                     exitcode: 0
                 command: 
                     - npm i 
-                    - npm build
+                    - npm yaml
                     - npm publish
 
     -   name: Helm Charts
@@ -55,7 +55,7 @@ modules:
 ### command to run the build
 
 ```shell
-forge build example.yaml
+yaml yaml example.yaml
 ```
 
 ### script the build file
@@ -71,7 +71,7 @@ modules:
                 type: basic.command
                 command:
                     - mvn clean install -P=local
-                    - docker build . -t {{ moduleA.imageName }}
+                    - docker yaml . -t {{ moduleA.imageName }}
 
     -   name: Helm Charts
         path: helm-charts
@@ -95,5 +95,5 @@ moduleA:
 ### command to run the build
 
 ```shell
-forge build example.yaml -v values.yaml
+yaml yaml example.yaml -v values.yaml
 ```

@@ -1,14 +1,13 @@
-import * as fs from "fs";
 import * as Handlebars from "handlebars";
 import * as Yaml from "js-yaml";
 import {CdCommand} from "./commands/cd";
 import {CustomCommand, CustomProfileCommand} from "./commands/customCommand";
 import {BuildScript, Module, Step} from "./models/BuildScript";
 import {Command} from "./interfaces/Command";
-import {Context, ContextImpl} from "./interfaces/Context";
-import * as path from "path";
+import {Context} from "../interfaces/Context";
 import {Environment} from "./commands/environment";
 import {ConditionalCommand} from "./commands/conditionalCommand";
+import {CommonUtil} from "../utility/commons";
 
 const chalk = require("chalk");
 
@@ -20,7 +19,7 @@ commands.set("basic.env", new Environment());
 commands.set("basic.command.condition", new ConditionalCommand());
 
 async function processScript(buildFileObject: BuildScript, context: Context) {
-    console.log("forging build %s", chalk.green('"' + buildFileObject.name + '"'));
+    console.log("forging yaml %s", chalk.green('"' + buildFileObject.name + '"'));
     for (let module of buildFileObject.modules) {
         // @ts-ignore
         const command: Command = commands.get("basic.cd");
@@ -48,24 +47,21 @@ async function processModule(module: Module, context: Context) {
 
 
 function loadValues(filePath: string) {
-    const valueFile = fs.readFileSync(filePath, {encoding: 'utf-8'})
+    const valueFile = CommonUtil.loadFile(filePath);
     return Yaml.load(valueFile);
 }
 
-export async function executeScript(buildScript: string, valuesYaml: string, profile: string) {
+export async function executeYaml(buildScript: string, valuesYaml: string, profile: string) {
     try {
         const values = valuesYaml != null ? await loadValues(valuesYaml) : {};
 
-        const yamlFile = fs.readFileSync(buildScript, {encoding: 'utf-8'})
+        const yamlFile = CommonUtil.loadFile(buildScript);
         const yamlTemplate = Handlebars.compile(yamlFile);
         const resultYamlFile = yamlTemplate(values);
 
         const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
 
-        const context = new ContextImpl();
-        let buildpath = path.join(process.cwd(), buildScript);
-        context.setCwd(path.dirname(buildpath))
-        context.setProfile(profile);
+        const context = CommonUtil.setupContext(buildScript, profile);
 
         await processScript(buildFile, context);
     } catch (e: any) {

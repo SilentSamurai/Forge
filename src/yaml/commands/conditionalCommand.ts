@@ -1,7 +1,7 @@
 import {Command} from "../interfaces/Command";
 import {Step} from "../models/BuildScript";
-import {Context} from "../interfaces/Context";
-import {Utility} from "../utility/utility";
+import {Context} from "../../interfaces/Context";
+import {Utility} from "../../utility/utility";
 import {executeCommand} from "./customCommand";
 
 export class ConditionalCommand implements Command {
@@ -18,7 +18,7 @@ export class ConditionalCommand implements Command {
         }
 
         if (cond) {
-            await executeCommand(step.command);
+            await executeCommand(context, step.command);
         }
     }
 

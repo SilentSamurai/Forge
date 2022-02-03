@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 const copyJob = {
-    "from": "bin/forge-win.exe",
-    "to": "C:/tools/forge/forge.exe"
+    "from": "bin/yaml-win.exe",
+    "to": "C:/tools/yaml/yaml.exe"
 }
 
 let targetFile = copyJob.to;
