@@ -7,12 +7,14 @@ export class ExecutionOutput {
 
     error: Error | null;
     cmdProcess: any;
+    exitCode: number;
     output: string;
 
     constructor(cmdProcess: any, output: string, error: Error | null) {
         this.cmdProcess = cmdProcess;
         this.output = output;
         this.error = error;
+        this.exitCode = cmdProcess.exitCode;
     }
 }
 

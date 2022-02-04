@@ -10,7 +10,7 @@
         "global-install": "node global-install.js",
         "update-forge": "npm run build && npm run package && npm run global-install",
         "main": "ts-node src/main.ts yaml test/build.yaml -p windows -v test/values.yaml",
-        "scriptJs": "ts-node src/main.ts build test/build.forge -p windows"
+        "scriptJs": "ts-node src/main.ts build test/build.forge.js -p windows"
     },
     "pkg": {
         "scripts": "build/**/*.js",
