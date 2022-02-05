@@ -6,7 +6,29 @@ import {ExecutionOutput} from "../utility/utility";
 const chalk = require('chalk')
 
 
+function configurePlatform() {
+
+    switch (process.platform) {
+        case "aix":
+            return "linux";
+        case "android":
+            return "linux";
+        case "freebsd":
+            return "linux";
+        case "linux":
+            return "linux";
+        case "openbsd":
+            return "linux";
+        case "win32":
+            return "windows";
+        case "darwin":
+            return "macOs";
+    }
+}
+
 let context: Context;
+const PLATFORM = configurePlatform();
+
 
 async function cd(path: string) {
     await Operations.cd(context, path)

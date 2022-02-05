@@ -2,9 +2,9 @@ async function ModuleA() {
     await cd("moduleA");
     await execute("echo apple-pei");
     await set_env("Apple", "pie");
-    await execute("echo $Apple");
+    await execute("echo %Apple%");
 
-    switch (platform) {
+    switch (PLATFORM) {
         case "windows":
             await execute("echo windows");
             break;
