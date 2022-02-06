@@ -6,11 +6,11 @@ import fs from "fs";
 export class CommonUtil {
 
 
-    public static setupContext(buildScript: string, profile: string) {
+    public static setupContext(buildScript: string, profile: string[]) {
         const context = new ContextImpl();
         let buildpath = path.join(process.cwd(), buildScript);
         context.setCwd(path.dirname(buildpath))
-        context.setProfile(profile);
+        context.extendProfile(profile);
         return context;
     }
 

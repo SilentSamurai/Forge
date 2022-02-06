@@ -13,7 +13,7 @@ program.command("yaml")
         await executeYaml(args, options.values, options.profile);
     });
 
-program.command("build")
+program.command("script")
     .description('Cross Platform Build Tools')
     .argument("<buildFile>", 'yaml yaml file')
     .option('-p, --profile <profile>', 'values file')

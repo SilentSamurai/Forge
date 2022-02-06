@@ -13,15 +13,11 @@ export async function executeCommand(context: Context, commands: string | string
 export class CustomProfileCommand implements Command {
 
     async process(context: Context, step: Step): Promise<void> {
-        if (context.getProfile() != null) {
-            for (const profileBuild of step.profiles) {
-                if (context.getProfile() === profileBuild.profile) {
-                    console.log("profile %s", profileBuild.profile);
-                    await executeCommand(context, step.command)
-                }
+        for (const profileBuild of step.profiles) {
+            if (context.isProfileActive(profileBuild.profile)) {
+                console.log("profile %s", profileBuild.profile);
+                await executeCommand(context, step.command)
             }
-        } else {
-            console.log("profile not found");
         }
     }
 }

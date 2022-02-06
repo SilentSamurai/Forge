@@ -46,6 +46,10 @@ async function get_env(key: string, value: string) {
     return await Operations.get_env(context, key);
 }
 
+function isProfileActive(profile: string) {
+    return context.isProfileActive(profile);
+}
+
 function print(message: string) {
     console.log(chalk.blue(message));
 }
@@ -55,9 +59,10 @@ function contains(string1: string, string2: string): boolean {
 }
 
 
-export async function executeScript(buildScript: string, profile: string) {
+export async function executeScript(buildScript: string, profileString: string) {
     try {
-        context = CommonUtil.setupContext(buildScript, profile);
+        const profiles = profileString.split(",");
+        context = CommonUtil.setupContext(buildScript, profiles);
         let scriptJs = CommonUtil.loadFile(buildScript);
         scriptJs = "\"use strict\"; async function main() { " +
             scriptJs +

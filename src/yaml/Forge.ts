@@ -51,7 +51,7 @@ function loadValues(filePath: string) {
     return Yaml.load(valueFile);
 }
 
-export async function executeYaml(buildScript: string, valuesYaml: string, profile: string) {
+export async function executeYaml(buildScript: string, valuesYaml: string, profileString: string) {
     try {
         const values = valuesYaml != null ? await loadValues(valuesYaml) : {};
 
@@ -61,7 +61,8 @@ export async function executeYaml(buildScript: string, valuesYaml: string, profi
 
         const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
 
-        const context = CommonUtil.setupContext(buildScript, profile);
+        const profiles = profileString.split(",");
+        const context = CommonUtil.setupContext(buildScript, profiles);
 
         await processScript(buildFile, context);
     } catch (e: any) {

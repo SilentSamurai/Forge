@@ -4,6 +4,10 @@ async function ModuleA() {
     await set_env("Apple", "pie");
     await execute("echo %Apple%");
 
+    if (isProfileActive("Deployment")) {
+        await execute("echo Deployment");
+    }
+
     switch (PLATFORM) {
         case "windows":
             await execute("echo windows");
