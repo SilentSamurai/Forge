@@ -56,16 +56,18 @@ function contains(string1: string, string2: string): boolean {
 
 
 export async function executeScript(buildScript: string, profile: string) {
-
     try {
         context = CommonUtil.setupContext(buildScript, profile);
         let scriptJs = CommonUtil.loadFile(buildScript);
         scriptJs = "\"use strict\"; async function main() { " +
             scriptJs +
-            " } \nmain().catch((e) => console.error(chalk.red(e.message)));"
+            " } \nmain().catch((e) => console.error(chalk.red(e.message)));";
+
+        console.debug(scriptJs);
 
         const output = eval(scriptJs);
     } catch (e: any) {
         console.error(chalk.red(e.message));
+        console.debug(e.stack);
     }
 }

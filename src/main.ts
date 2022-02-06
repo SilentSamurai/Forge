@@ -1,8 +1,7 @@
 import {executeYaml} from "./yaml/Forge";
 import chalk from "chalk";
 import {executeScript} from "./script/Forge";
-
-const {program} = require('commander');
+import {program} from "commander";
 
 
 program.command("yaml")
