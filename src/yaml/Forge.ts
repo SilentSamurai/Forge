@@ -61,8 +61,7 @@ export async function executeYaml(buildScript: string, valuesYaml: string, profi
 
         const buildFile: BuildScript = Yaml.load(resultYamlFile) as BuildScript;
 
-        const profiles = profileString.split(",");
-        const context = CommonUtil.setupContext(buildScript, profiles);
+        const context = CommonUtil.setupContext(buildScript, profileString);
 
         await processScript(buildFile, context);
     } catch (e: any) {

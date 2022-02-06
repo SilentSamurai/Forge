@@ -61,8 +61,7 @@ function contains(string1: string, string2: string): boolean {
 
 export async function executeScript(buildScript: string, profileString: string) {
     try {
-        const profiles = profileString.split(",");
-        context = CommonUtil.setupContext(buildScript, profiles);
+        context = CommonUtil.setupContext(buildScript, profileString);
         let scriptJs = CommonUtil.loadFile(buildScript);
         scriptJs = "\"use strict\"; async function main() { " +
             scriptJs +
