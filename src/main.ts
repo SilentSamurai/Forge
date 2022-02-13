@@ -1,8 +1,7 @@
 import {executeYaml} from "./yaml/Forge";
 import chalk from "chalk";
 import {executeScript} from "./script/Forge";
-
-const {program} = require('commander');
+import {program} from "commander";
 
 
 program.command("yaml")
@@ -14,7 +13,7 @@ program.command("yaml")
         await executeYaml(args, options.values, options.profile);
     });
 
-program.command("build")
+program.command("script")
     .description('Cross Platform Build Tools')
     .argument("<buildFile>", 'yaml yaml file')
     .option('-p, --profile <profile>', 'values file')

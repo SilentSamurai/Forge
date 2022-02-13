@@ -108,5 +108,6 @@ dist
 
 build
 bin
+/package-lock.json
 
 package-lock.json

@@ -20,7 +20,7 @@ jobs:
                     # Defaults to the user or organization that owns the workflows file
                     scope: 'SilentSamurai'
             -   run: npm install
-            -   run: npm run yaml
+            -   run: npm run build
             -   run: npm run package
 #            -   name: Upload the artifacts
 #                uses: skx/github-action-publish-binaries@master

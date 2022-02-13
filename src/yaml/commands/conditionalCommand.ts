@@ -11,10 +11,10 @@ export class ConditionalCommand implements Command {
         let cond = false;
         if (step.condition.not != null) {
             cond = cond || (step.condition.not.contains != null && output.includes(step.condition.not.contains));
-            cond = cond || (step.condition.not.exitCode != null && executionOutput.cmdProcess.exitCode == step.condition.not.exitCode);
+            cond = cond || (step.condition.not.exitCode != null && executionOutput.exitCode == step.condition.not.exitCode);
         } else {
             cond = cond || (step.condition.contains != null && output.includes(step.condition.contains));
-            cond = cond || (step.condition.exitCode != null && executionOutput.cmdProcess.exitCode == step.condition.exitCode);
+            cond = cond || (step.condition.exitCode != null && executionOutput.exitCode == step.condition.exitCode);
         }
 
         if (cond) {

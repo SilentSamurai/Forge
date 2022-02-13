@@ -26,13 +26,9 @@ export class Operations {
         return process.env[key];
     }
 
-    public static async executeOne(context: Context, commands: string) {
+    public static async executeNoThrow(context: Context, commands: string) {
         console.log("--> executing command %s", chalk.green(commands));
-        let executionOutput = await Utility.execute(commands);
-        if (executionOutput.cmdProcess.exitCode != 0) {
-            throw new Error("command returned non zero exit code.");
-        }
-        return executionOutput;
+        return await Utility.execute(commands);
     }
 
 
