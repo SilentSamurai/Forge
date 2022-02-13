@@ -2,32 +2,16 @@ import {CommonUtil} from "../utility/commons";
 import {Operations} from "../operations/operations";
 import {Context} from "../interfaces/Context";
 import {ExecutionOutput} from "../utility/utility";
+import * as Helpers from "./helpers";
 
-const chalk = require('chalk')
+const chalk = require('chalk');
 
-
-function configurePlatform() {
-
-    switch (process.platform) {
-        case "aix":
-            return "linux";
-        case "android":
-            return "linux";
-        case "freebsd":
-            return "linux";
-        case "linux":
-            return "linux";
-        case "openbsd":
-            return "linux";
-        case "win32":
-            return "windows";
-        case "darwin":
-            return "macOs";
-    }
-}
+const WINDOWS = Helpers.WINDOWS;
+const MACOS = Helpers.MACOS;
+const LINUX = Helpers.LINUX;
 
 let context: Context;
-const PLATFORM = configurePlatform();
+const PLATFORM = Helpers.configurePlatform();
 
 
 async function cd(path: string) {
@@ -46,7 +30,7 @@ async function get_env(key: string, value: string) {
     return await Operations.get_env(context, key);
 }
 
-function isProfileActive(profile: string) {
+function profile(profile: string) {
     return context.isProfileActive(profile);
 }
 

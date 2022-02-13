@@ -2,22 +2,27 @@ async function ModuleA() {
     await cd("moduleA");
     await execute("echo apple-pei");
     await set_env("Apple", "pie");
-    await execute("echo %Apple%");
 
-    if (isProfileActive("Deployment")) {
+    if (profile("Deployment")) {
         await execute("echo Deployment");
     }
 
     switch (PLATFORM) {
-        case "windows":
+        case WINDOWS:
+            await execute("echo %Apple%");
+        case LINUX:
+            await execute("echo $Apple");
+        case MACOS:
+            await execute("echo $Apple");
+    }
+
+    switch (PLATFORM) {
+        case WINDOWS:
             await execute("echo windows");
-            break;
-        case "linux":
+        case LINUX:
             await execute("echo linus");
-            break;
-        case "macOs":
+        case MACOS:
             await execute("echo macOs");
-            break;
     }
 
 }
