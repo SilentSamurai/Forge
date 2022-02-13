@@ -1,8 +1,9 @@
 import {executeYaml} from "./yaml/Forge";
-import chalk from "chalk";
 import {executeScript} from "./script/Forge";
 import {program} from "commander";
+import {Logger} from "./logging/Logger";
 
+const logger = Logger.getLogger("main");
 
 program.command("yaml")
     .description('Cross Platform Build Tools')
@@ -25,4 +26,4 @@ async function main() {
     program.parse(process.argv);
 }
 
-main().catch((e: Error) => console.error(chalk.red(e.message)));
+main().catch((e: Error) => logger.error(e.message));

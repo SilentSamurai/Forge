@@ -1,7 +1,11 @@
+import {Logger} from "../logging/Logger";
+import {splitSpacesExcludeQuotes} from 'quoted-string-space-split';
+
 const fs = require('fs');
 const {spawn} = require("child_process");
 const path = require('path');
-import {splitSpacesExcludeQuotes} from 'quoted-string-space-split';
+
+const logger = Logger.getLogger("utility");
 
 export class ExecutionOutput {
 
@@ -69,7 +73,7 @@ export class Utility {
             if (e) {
                 console.error(e);
             } else {
-                console.log('Success');
+                logger.info('Success');
             }
         });
     }

@@ -3,6 +3,9 @@ import {Operations} from "../operations/operations";
 import {Context} from "../interfaces/Context";
 import {ExecutionOutput} from "../utility/utility";
 import * as Helpers from "./helpers";
+import {Logger} from "../logging/Logger";
+
+const logger = Logger.getLogger("script.Forge");
 
 const chalk = require('chalk');
 
@@ -35,7 +38,7 @@ function profile(profile: string) {
 }
 
 function print(message: string) {
-    console.log(chalk.blue(message));
+    logger.info(chalk.blue(message));
 }
 
 function contains(string1: string, string2: string): boolean {
@@ -51,11 +54,11 @@ export async function executeScript(buildScript: string, profileString: string) 
             scriptJs +
             " } \nmain().catch((e) => console.error(chalk.red(e.message)));";
 
-        console.debug(scriptJs);
+        logger.info(scriptJs);
 
         const output = eval(scriptJs);
     } catch (e: any) {
-        console.error(chalk.red(e.message));
-        console.debug(e.stack);
+        logger.error(chalk.red(e.message));
+        logger.debug(e.stack);
     }
 }

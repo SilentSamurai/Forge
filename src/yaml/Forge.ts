@@ -8,8 +8,10 @@ import {Context} from "../interfaces/Context";
 import {Environment} from "./commands/environment";
 import {ConditionalCommand} from "./commands/conditionalCommand";
 import {CommonUtil} from "../utility/commons";
+import {Logger} from "../logging/Logger";
 
 const chalk = require("chalk");
+const logger = Logger.getLogger("yaml.Forge");
 
 const commands: Map<string, Command> = new Map<string, Command>();
 commands.set("basic.cd", new CdCommand());
@@ -19,30 +21,30 @@ commands.set("basic.env", new Environment());
 commands.set("basic.command.condition", new ConditionalCommand());
 
 async function processScript(buildFileObject: BuildScript, context: Context) {
-    console.log("forging yaml %s", chalk.green('"' + buildFileObject.name + '"'));
+    logger.info("forging yaml %s", chalk.green('"' + buildFileObject.name + '"'));
     for (let module of buildFileObject.modules) {
         // @ts-ignore
         const command: Command = commands.get("basic.cd");
         await command.process(context, {path: module.path} as any);
         await processModule(module, context);
     }
-    console.log(chalk.green('"' + buildFileObject.name + '"'), "artifact(s) forged.")
+    logger.info(chalk.green('"' + buildFileObject.name + '"'), "artifact(s) forged.")
 }
 
 async function processModule(module: Module, context: Context) {
-    console.log("forging module %s", chalk.green('"' + module.name + '"'))
+    logger.info("forging module %s", chalk.green('"' + module.name + '"'))
     let step: Step;
     for (step of module.steps) {
-        console.log("--> executing step %s", chalk.green('"' + step.step + '"'));
+        logger.info("--> executing step %s", chalk.green('"' + step.step + '"'));
         const command: Command | undefined = commands.get(step.type);
         if (command != null) {
             await command.process(context, step);
         } else {
-            console.log("step type %s unknown", step.type);
+            logger.info("step type %s unknown", step.type);
             throw new Error("unknown step " + step.type);
         }
     }
-    console.log(chalk.green('"' + module.name + '"'), "module forged.")
+    logger.info(chalk.green('"' + module.name + '"'), "module forged.")
 }
 
 
@@ -65,7 +67,7 @@ export async function executeYaml(buildScript: string, valuesYaml: string, profi
 
         await processScript(buildFile, context);
     } catch (e: any) {
-        console.error(chalk.red(e.message));
+        logger.error(e.message);
     }
 
 }

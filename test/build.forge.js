@@ -4,7 +4,7 @@ async function ModuleA() {
     await set_env("Apple", "pie");
 
     if (profile("Deployment")) {
-        await execute("echo Deployment");
+        await execute("echno Deployment");
     }
 
     switch (PLATFORM) {

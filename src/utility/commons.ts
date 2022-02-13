@@ -1,7 +1,9 @@
 import {Context} from "../interfaces/Context";
 import path from "path";
 import fs from "fs";
+import {Logger} from "../logging/Logger";
 
+const logger = Logger.getLogger("commons");
 
 class ContextImpl implements Context {
 
@@ -39,6 +41,7 @@ export class CommonUtil {
         context.setCwd(path.dirname(buildpath))
         if (profileString != null) {
             const profiles = profileString.split(",");
+            logger.info("Profiles Active : ", profiles);
             context.extendProfile(profiles);
         }
         return context;

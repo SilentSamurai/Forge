@@ -33,6 +33,7 @@
         "url": "https://github.com/SilentSamurai/Forge/issues"
     },
     "devDependencies": {
+        "@types/dateformat": "^5.0.0",
         "@types/node": "^12.20.42",
         "pkg": "^5.5.2",
         "ts-node": "^10.4.0",
@@ -45,6 +46,7 @@
         "chalk": "^4.1.2",
         "commander": "^8.3.0",
         "copyfiles": "^2.4.1",
+        "dateformat": "^4.6.3",
         "handlebars": "^4.7.7",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.1",
