@@ -1,4 +1,0 @@
-## modileA
-moduleA:
-    environment: production
-    imageName: username/image-name

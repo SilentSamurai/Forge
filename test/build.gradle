@@ -1,0 +1,15 @@
+
+
+task upper {
+    doLast{
+        String expString = 'TUTORIALS point'
+        println "Original: " + expString
+        println "Upper case: " + expString.toUpperCase()
+
+
+        exec {
+                commandLine "echo", "Hello world!"
+            }
+    }
+
+}
