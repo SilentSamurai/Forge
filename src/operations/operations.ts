@@ -29,7 +29,7 @@ export class Operations {
     }
 
     public static async executeNoThrow(context: Context, commands: string) {
-        logger.info("--> executing command %s", chalk.green(commands));
+        logger.info("executing command %s", chalk.green(commands));
         return await Utility.execute(commands);
     }
 
@@ -37,7 +37,7 @@ export class Operations {
     public static async execute(context: Context, commands: string | string[]) {
         if (Array.isArray(commands)) {
             for (const cmd of commands) {
-                logger.info("--> executing command %s", chalk.green(cmd));
+                logger.info("executing command %s", chalk.green(cmd));
                 let executionOutput = await Utility.execute(cmd);
                 if (executionOutput.cmdProcess.exitCode != 0) {
                     throw new Error("command returned non zero exit code.");
@@ -45,7 +45,7 @@ export class Operations {
             }
         }
         if (typeof (commands) === "string") {
-            logger.info("--> executing command %s", chalk.green(commands));
+            logger.info("executing command %s", chalk.green(commands));
             let executionOutput = await Utility.execute(commands);
             if (executionOutput.cmdProcess.exitCode != 0) {
                 throw new Error("command returned non zero exit code.");

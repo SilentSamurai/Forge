@@ -31,6 +31,10 @@ export class Utility {
             const split = splitSpacesExcludeQuotes(cmd);
             cmd = split[0]
             args = split.slice(1);
+            args = args.map(value => {
+                if (value.indexOf(" ") != -1) return `"${value}"`
+                return value
+            });
         }
 
         // console.debug("executing: ", cmd, args);

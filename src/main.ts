@@ -9,9 +9,8 @@ program.command("yaml")
     .description('Cross Platform Build Tools')
     .argument("<buildFile>", 'yaml yaml file')
     .option('-v, --values <valuesFile>', 'values file')
-    .option('-p, --profile <profile>', 'values file')
-    .action(async (args: string, options: { values: string, profile: string }) => {
-        await executeYaml(args, options.values, options.profile);
+    .action(async (args: string, options: { values: string }) => {
+        await executeYaml(args, options.values);
     });
 
 program.command("script")

@@ -35,7 +35,7 @@ class ContextImpl implements Context {
 export class CommonUtil {
 
 
-    public static setupContext(buildScript: string, profileString: string): Context {
+    public static setupContext(buildScript: string, profileString: string | null): Context {
         const context = new ContextImpl();
         let buildpath = path.join(process.cwd(), buildScript);
         context.setCwd(path.dirname(buildpath))

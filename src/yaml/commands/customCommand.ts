@@ -1,6 +1,6 @@
 import {Command} from "../interfaces/Command";
 import {Context} from "../../interfaces/Context";
-import {Step} from "../models/BuildScript";
+import {CommandStep} from "../models/BuildScript";
 import {Operations} from "../../operations/operations";
 import {Logger} from "../../logging/Logger";
 
@@ -13,22 +13,19 @@ export async function executeCommand(context: Context, commands: string | string
 }
 
 
-export class CustomProfileCommand implements Command {
-
-    async process(context: Context, step: Step): Promise<void> {
-        for (const profileBuild of step.profiles) {
-            if (context.isProfileActive(profileBuild.profile)) {
-                logger.info("profile %s", profileBuild.profile);
-                await executeCommand(context, step.command)
-            }
-        }
-    }
-}
-
 export class CustomCommand implements Command {
 
-    async process(context: Context, step: Step): Promise<void> {
-        await executeCommand(context, step.command);
+    async process(context: Context, container: string, step: CommandStep): Promise<void> {
+        if (Array.isArray(step.command)) {
+            for (const cmd of step.command) {
+                const command = `docker exec --workdir=${step.workdir} ${container} ${cmd}`
+                await executeCommand(context, command);
+            }
+        }
+        if (typeof (step.command) === "string") {
+            const command = `docker exec --workdir=${step.workdir} ${container} ${step.command}`
+            await executeCommand(context, command);
+        }
     }
 
 }

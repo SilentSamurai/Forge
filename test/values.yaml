@@ -2,3 +2,8 @@
 moduleA:
     environment: production
     imageName: username/image-name
+
+credentials:
+    git:
+        username:
+        token:

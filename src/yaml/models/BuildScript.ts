@@ -1,28 +1,24 @@
-export interface ProfileBuild {
-    profile: string;
-    command: string | string[];
-}
-
-export interface Condition {
-    contains: string;
-    exitCode: number;
-    command: string;
-    not: Condition;
-}
-
 export interface Step {
     step: string;
     type: string;
+}
+
+export interface CommandStep extends Step {
+    workdir: string;
     command: string | string[];
-    profiles: ProfileBuild[];
-    envVariables: { [key: string]: string };
-    condition: Condition;
+}
+
+export interface TransferStep extends Step {
+    source: string;
+    destination: string;
 }
 
 export interface Module {
     name: string;
-    path: string;
+    image: string;
     steps: Step[];
+    environment: {};
+    container: string;
 }
 
 export interface BuildScript {
