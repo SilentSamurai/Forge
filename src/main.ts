@@ -1,22 +1,13 @@
-import {executeYaml} from "./yaml/Forge";
 import {executeScript} from "./script/Forge";
 import {program} from "commander";
 import {Logger} from "./logging/Logger";
 
 const logger = Logger.getLogger("main");
 
-program.command("yaml")
+program.command("build")
     .description('Cross Platform Build Tools')
-    .argument("<buildFile>", 'yaml yaml file')
-    .option('-v, --values <valuesFile>', 'values file')
-    .action(async (args: string, options: { values: string }) => {
-        await executeYaml(args, options.values);
-    });
-
-program.command("script")
-    .description('Cross Platform Build Tools')
-    .argument("<buildFile>", 'yaml yaml file')
-    .option('-p, --profile <profile>', 'values file')
+    .argument("<buildFile>", 'forge file')
+    .option('-p, --profile <profile>', 'profiles')
     .action(async (args: string, options: { values: string, profile: string }) => {
         await executeScript(args, options.profile);
     });
