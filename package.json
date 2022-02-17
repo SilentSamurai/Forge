@@ -10,7 +10,8 @@
         "global-install": "node global-install.js",
         "update-forge": "npm run build && npm run package && npm run global-install",
         "main": "ts-node src/main.ts yaml test/build.yaml -v test/values.yaml",
-        "scriptJs": "ts-node src/main.ts script test/build.forge.js -p Deployment,Apple"
+        "scriptJs": "ts-node src/main.ts build test/build.forge.js -p Deployment,Apple",
+        "jenkins-install": "ts-node src/main.ts build setup-jenkins.forge.js "
     },
     "pkg": {
         "scripts": "build/**/*.js",
