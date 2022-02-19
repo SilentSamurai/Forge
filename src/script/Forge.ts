@@ -1,42 +1,40 @@
 import {CommonUtil} from "../utility/commons";
 import {Operations} from "../operations/operations";
-import {Context} from "../interfaces/Context";
 import {ExecutionOutput} from "../utility/utility";
-import * as Helpers from "./helpers";
-import {findAgent} from "./helpers";
 import {Logger} from "../logging/Logger";
 import {Pipeline} from "../models/pipeline";
+import {PipelineHelper, PipelineProcessor} from "./helpers";
 
-const logger = Logger.getLogger("script.Forge");
+const logger = Logger.getLogger("Forge");
 
 const chalk = require('chalk');
 
-const WINDOWS = Helpers.WINDOWS;
-const MACOS = Helpers.MACOS;
-const LINUX = Helpers.LINUX;
+const WINDOWS = PipelineHelper.WINDOWS;
+const DARWIN = PipelineHelper.DARWIN;
+const LINUX = PipelineHelper.LINUX;
 
-let context: Context;
-const PLATFORM = Helpers.configurePlatform();
+
+const PLATFORM = PipelineHelper.PLATFORM;
 
 
 async function cd(path: string) {
-    await Operations.cd(context, path)
+    await Operations.cd(PipelineHelper.context, path)
 }
 
-async function execute(command: string): Promise<ExecutionOutput> {
-    return await Operations.executeNoThrow(context, command);
+async function sh(command: string): Promise<ExecutionOutput> {
+    return await Operations.executeNoThrow(PipelineHelper.context, command);
 }
 
 async function set_env(key: string, value: string) {
-    await Operations.set_env(context, key, value);
+    await Operations.set_env(PipelineHelper.context, key, value);
 }
 
 async function get_env(key: string, value: string) {
-    return await Operations.get_env(context, key);
+    return await Operations.get_env(PipelineHelper.context, key);
 }
 
 function profile(profile: string) {
-    return context.isProfileActive(profile);
+    return PipelineHelper.context.isProfileActive(profile);
 }
 
 function print(message: string) {
@@ -54,26 +52,39 @@ function cred(id: string): string {
 let pipeline: Pipeline;
 
 
-async function processPipeline(pipeline1: Pipeline) {
-    let agent = findAgent(pipeline1.agent);
-
-}
+PipelineProcessor.TASKS.set("path", cd);
+PipelineProcessor.TASKS.set("set_env", set_env);
+PipelineProcessor.TASKS.set("sh", async (cmd: string | { [key: string]: string }) => {
+    if (typeof (cmd) === "string") {
+        await sh(cmd);
+    }
+    if (typeof (cmd) === "object") {
+        for (const key in cmd) {
+            await sh(cmd[key])
+        }
+    }
+});
 
 
 export async function executeScript(buildScript: string, profileString: string) {
     try {
-        context = CommonUtil.setupContext(buildScript, profileString);
+
+        PipelineHelper.setupContext(buildScript, profileString);
         let scriptJs = CommonUtil.loadFile(buildScript);
         scriptJs = "\"use strict\"; async function main() { " +
             scriptJs +
             " } \nmain().catch((e) => console.error(chalk.red(e.message)));";
 
-        logger.info(scriptJs);
+        // logger.info(scriptJs);
 
         const output = eval(scriptJs);
         logger.info("Pipeline ", pipeline)
 
-        Ope
+        if (pipeline != null) {
+            let pipelineProcessor = new PipelineProcessor();
+            await pipelineProcessor.processPipeline(pipeline);
+        }
+
 
     } catch (e: any) {
         logger.error(chalk.red(e.message));

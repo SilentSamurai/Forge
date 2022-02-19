@@ -8,10 +8,10 @@ const logger = Logger.getLogger("commons");
 class ContextImpl implements Context {
 
     profile: Set<string> = new Set<string>();
-    currentCwd: string | undefined;
+    currentCwd: string;
 
-    setCwd(path: string) {
-        this.currentCwd = path;
+    constructor(currentCwd: string) {
+        this.currentCwd = currentCwd;
     }
 
     addProfile(profile: string) {
@@ -22,11 +22,11 @@ class ContextImpl implements Context {
         profile.forEach(value => this.profile.add(value));
     }
 
-    getCwd(): string {
+    public getCwd(): string {
         return this.currentCwd as string;
     }
 
-    isProfileActive(profile: string): boolean {
+    public isProfileActive(profile: string): boolean {
         return this.profile.has(profile);
     }
 
@@ -36,14 +36,15 @@ export class CommonUtil {
 
 
     public static setupContext(buildScript: string, profileString: string | null): Context {
-        const context = new ContextImpl();
         let buildpath = path.join(process.cwd(), buildScript);
-        context.setCwd(path.dirname(buildpath))
+        let cwd = path.dirname(buildpath)
+        const context = new ContextImpl(cwd);
         if (profileString != null) {
             const profiles = profileString.split(",");
             logger.info("Profiles Active : ", profiles);
             context.extendProfile(profiles);
         }
+
         return context;
     }
 

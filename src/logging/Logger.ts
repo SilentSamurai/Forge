@@ -15,7 +15,7 @@ export class Logger {
     }
 
     info(message?: string, ...optionalParams: any[]) {
-        console.log(`[${this.formatDate()}] [${this.name}] : ${message} `, ...optionalParams)
+        console.log(`[${this.formatDate()}] [${this.name}] : ${message}`, ...optionalParams)
     }
 
     error(message?: string, exception: Error | null = null) {

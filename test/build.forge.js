@@ -1,6 +1,6 @@
 async function clone() {
-    await sh("git config something");
-    await sh("git clone something");
+    await sh('echo "git config something"');
+    await sh('echo "git clone something"');
 }
 
 
@@ -15,18 +15,12 @@ async function ModuleA() {
         await sh("echo Deployment");
     }
 
-    await linear({
-        build: {
-            sh: "mvn clean install"
-        },
-    })
-
     switch (PLATFORM) {
         case WINDOWS:
             await sh("echo %Apple%");
         case LINUX:
             await sh("echo $Apple");
-        case MACOS:
+        case DARWIN:
             await sh("echo $Apple");
     }
 
@@ -35,7 +29,7 @@ async function ModuleA() {
             await sh("echo windows");
         case LINUX:
             await sh("echo linus");
-        case MACOS:
+        case DARWIN:
             await sh("echo macOs");
     }
 
@@ -45,11 +39,6 @@ async function ModuleA() {
 // ModuleA()
 
 pipeline = {
-    agent: {
-        docker: {
-            image: "maven"
-        },
-    },
     environment: {
         GIT_USERNAME: cred("GIT_USERNAME"),
     },
@@ -60,18 +49,20 @@ pipeline = {
         build: {
             path: "",
             sh: {
-                update_deps: "mvn versions",
-                install: "mvn clean install",
+                update_deps: 'echo "mvn version"',
+                install: 'echo "mvn clean install"',
             }
         },
         push: {
             windows: {
-                sh: ""
+                sh: "echo windows"
             },
             linux: {
-                sh: ""
+                sh: "echo linux"
             },
-            darwin: {}
+            darwin: {
+                sh: "echo darwin"
+            }
         }
     }
 }
