@@ -73,51 +73,75 @@ await ModuleA();
 
 ```
 
-### Example Build Script - Yaml
+### Example Build Script - pipeline
 
-```yaml
-api: v1
-name: Build
-modules:
-    -   name: Backend
-        path: backend
-        steps:
-            -   step: Build War & Docker Image
-                type: basic.command
-                command:
-                    - mvn clean install -P=local
-                    - docker yaml . -t sd25/ims-backend
+```js
+async function clone() {
+    await sh('echo "git config something"');
+    await sh('echo "git clone something"');
+}
 
-    -   name: Frondend
-        path: frontend
-        steps:
-            -   step: Add environment variables
-                type: basic.env
-                envVariables:
-                    stage: production
 
-            -   step: Conditional Command
-                type: basic.command.condition
-                condition:
-                    command: echo "ulalalallalala loop"
-                    not:
-                        contains: loop
-                        exitcode: 0
-                    contains: loop
-                    exitcode: 0
-                command: 
-                    - npm i 
-                    - npm yaml
-                    - npm publish
+async function ModuleA() {
+    await cd("");
+    await sh("echo apple-pei");
+    await set_env("Apple", "pie");
 
-    -   name: Helm Charts
-        path: helm-charts
-        steps:
-            -   step: Helm Backend
-                type: basic.command
-                command:
-                    - minikube start
-                    - helm install backend backend
+    if (profile("Deployment")) {
+        await sh("echo Deployment");
+    }
+
+    switch (PLATFORM) {
+        case WINDOWS:
+            await sh("echo %Apple%");
+        case LINUX:
+            await sh("echo $Apple");
+        case DARWIN:
+            await sh("echo $Apple");
+    }
+
+    switch (PLATFORM) {
+        case WINDOWS:
+            await sh("echo windows");
+        case LINUX:
+            await sh("echo linus");
+        case DARWIN:
+            await sh("echo macOs");
+    }
+
+}
+
+// await ModuleA();
+// ModuleA()
+
+pipeline = {
+    environment: {
+        GIT_USERNAME: cred("GIT_USERNAME"),
+    },
+    steps: {
+        clone: {
+            custom: ModuleA
+        },
+        build: {
+            path: "",
+            sh: {
+                update_deps: 'echo "mvn version"',
+                install: 'echo "mvn clean install"',
+            }
+        },
+        push: {
+            windows: {
+                sh: "echo windows"
+            },
+            linux: {
+                sh: "echo linux"
+            },
+            darwin: {
+                sh: "echo darwin"
+            }
+        }
+    }
+}
 
 ```
 
@@ -125,44 +149,4 @@ modules:
 
 ```shell
 forge yaml example.yaml
-```
-
-### script the build file
-
-```yaml
-api: v1
-name: Build
-modules:
-    -   name: Backend
-        path: backend
-        steps:
-            -   step: Build War & Docker Image
-                type: basic.command
-                command:
-                    - mvn clean install -P=local
-                    - docker yaml . -t {{ moduleA.imageName }}
-
-    -   name: Helm Charts
-        path: helm-charts
-        steps:
-            -   step: Helm Backend
-                type: basic.command
-                command:
-                    - minikube start
-                    - helm install backend backend
-```
-
-### values.yaml
-
-```yaml
-## moduleA
-moduleA:
-    environment: production
-    imageName: username/image-name
-```
-
-### command to run the build
-
-```shell
-forge yaml example.yaml -v values.yaml
 ```
