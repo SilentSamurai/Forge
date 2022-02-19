@@ -45,6 +45,12 @@ function contains(string1: string, string2: string): boolean {
     return string1.includes(string2);
 }
 
+function cred(id: string): string {
+    return id;
+}
+
+let pipeline: any= null;
+
 
 export async function executeScript(buildScript: string, profileString: string) {
     try {
@@ -57,6 +63,7 @@ export async function executeScript(buildScript: string, profileString: string) 
         logger.info(scriptJs);
 
         const output = eval(scriptJs);
+        logger.info(pipeline)
     } catch (e: any) {
         logger.error(chalk.red(e.message));
         logger.debug(e.stack);
