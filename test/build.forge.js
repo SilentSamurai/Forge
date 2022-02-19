@@ -54,7 +54,9 @@ pipeline = {
         GIT_USERNAME: cred("GIT_USERNAME"),
     },
     steps: {
-        clone: clone,
+        clone: {
+            custom: clone
+        },
         build: {
             path: "",
             sh: {

@@ -3,7 +3,9 @@ import {Operations} from "../operations/operations";
 import {Context} from "../interfaces/Context";
 import {ExecutionOutput} from "../utility/utility";
 import * as Helpers from "./helpers";
+import {findAgent} from "./helpers";
 import {Logger} from "../logging/Logger";
+import {Pipeline} from "../models/pipeline";
 
 const logger = Logger.getLogger("script.Forge");
 
@@ -49,7 +51,13 @@ function cred(id: string): string {
     return id;
 }
 
-let pipeline: any= null;
+let pipeline: Pipeline;
+
+
+async function processPipeline(pipeline1: Pipeline) {
+    let agent = findAgent(pipeline1.agent);
+
+}
 
 
 export async function executeScript(buildScript: string, profileString: string) {
@@ -63,7 +71,10 @@ export async function executeScript(buildScript: string, profileString: string) 
         logger.info(scriptJs);
 
         const output = eval(scriptJs);
-        logger.info(pipeline)
+        logger.info("Pipeline ", pipeline)
+
+        Ope
+
     } catch (e: any) {
         logger.error(chalk.red(e.message));
         logger.debug(e.stack);
