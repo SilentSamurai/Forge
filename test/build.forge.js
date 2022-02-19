@@ -5,11 +5,9 @@ async function clone() {
 
 
 async function ModuleA() {
-    await cd("moduleA");
+    await cd("");
     await sh("echo apple-pei");
-    await environment({
-        Apple: "pie"
-    });
+    await set_env("Apple", "pie");
 
     if (profile("Deployment")) {
         await sh("echo Deployment");
@@ -44,7 +42,7 @@ pipeline = {
     },
     steps: {
         clone: {
-            custom: clone
+            custom: ModuleA
         },
         build: {
             path: "",
