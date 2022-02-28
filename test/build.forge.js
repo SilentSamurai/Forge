@@ -1,32 +1,66 @@
+async function clone() {
+    await sh('echo "git config something"');
+    await sh('echo "git clone something"');
+}
+
+
 async function ModuleA() {
-    await cd("moduleA");
-    await execute("echo apple-pei");
+    await cd("");
+    await sh("echo apple-pei");
     await set_env("Apple", "pie");
 
     if (profile("Deployment")) {
-        await execute("echno Deployment");
+        await sh("echo Deployment");
     }
 
     switch (PLATFORM) {
         case WINDOWS:
-            await execute("echo %Apple%");
+            await sh("echo %Apple%");
         case LINUX:
-            await execute("echo $Apple");
-        case MACOS:
-            await execute("echo $Apple");
+            await sh("echo $Apple");
+        case DARWIN:
+            await sh("echo $Apple");
     }
 
     switch (PLATFORM) {
         case WINDOWS:
-            await execute("echo windows");
+            await sh("echo windows");
         case LINUX:
-            await execute("echo linus");
-        case MACOS:
-            await execute("echo macOs");
+            await sh("echo linus");
+        case DARWIN:
+            await sh("echo macOs");
     }
 
 }
 
-
-await ModuleA();
+// await ModuleA();
 // ModuleA()
+
+pipeline = {
+    environment: {
+        GIT_USERNAME: cred("GIT_USERNAME"),
+    },
+    steps: {
+        clone: {
+            custom: ModuleA
+        },
+        build: {
+            path: "",
+            sh: {
+                update_deps: 'echo "mvn version"',
+                install: 'echo "mvn clean install"',
+            }
+        },
+        push: {
+            windows: {
+                sh: "echo windows"
+            },
+            linux: {
+                sh: "echo linux"
+            },
+            darwin: {
+                sh: "echo darwin"
+            }
+        }
+    }
+}
