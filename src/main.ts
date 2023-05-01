@@ -1,4 +1,4 @@
-import {executeScript} from "./script/Forge";
+import {Forge} from "./Forge";
 import {program} from "commander";
 import {Logger} from "./logging/Logger";
 
@@ -6,10 +6,13 @@ const logger = Logger.getLogger("main");
 
 program.command("build")
     .description('Cross Platform Build Tools')
-    .argument("<buildFile>", 'forge file')
+    .argument("<script>", 'script to execute in forge file')
     .option('-p, --profile <profile>', 'profiles')
-    .action(async (args: string, options: { values: string, profile: string }) => {
-        await executeScript(args, options.profile);
+    .option('-f, --buildFile <buildFile>', 'build file')
+    .action(async (args: string, options: { values: string, profile: string, buildFile: string }) => {
+        let forge = new Forge();
+        let buildFile = options.buildFile == null ? "build.forge.js" : options.buildFile;
+        await forge.executeScript(args, buildFile, options.profile);
     });
 
 async function main() {
