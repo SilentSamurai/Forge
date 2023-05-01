@@ -11,13 +11,24 @@ const logger = Logger.getLogger("operations");
 export class DefaultOperations {
 
     @Operation
-    public async sh(context: Context, cmd: any) {
-        if (typeof (cmd) === "string") {
-            await this.executeNoThrow(context, cmd);
+    public async sh(context: Context, params: any) {
+        if (typeof (params) === "string") {
+            await this.execute(context, params);
         }
-        if (typeof (cmd) === "object") {
-            for (const key in cmd) {
-                await this.executeNoThrow(context, cmd[key]);
+        let ignoreError = false;
+        if (params.hasOwnProperty("ignoreError")) {
+            ignoreError = params.ignoreError;
+        }
+        if (params.hasOwnProperty("cmd")) {
+            if (ignoreError) {
+                await this.executeNoThrow(context, params.cmd);
+            } else {
+                await this.execute(context, params.cmd);
+            }
+        }
+        if (typeof (params) === "object") {
+            for (const key in params) {
+                await this.sh(context, params[key]);
             }
         }
     }
@@ -104,7 +115,7 @@ export class DefaultOperations {
     }
 
     @Operation
-    public async rm(context: Context, param: string): Promise<void> {
+    public async rm(context: Context, param: { file: string, recursive: boolean }): Promise<void> {
         await FileOperations.rm(param);
     }
 }

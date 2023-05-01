@@ -34,11 +34,11 @@ export class FileOperations {
         await mv(soruce, destination);
     }
 
-    public static async rm(fileFolder: string) {
-        if (fs.lstatSync(fileFolder).isFile()) {
-            fs.unlinkSync(fileFolder);
+    public static async rm(param: { file: string, recursive: boolean }) {
+        if (fs.lstatSync(param.file).isFile()) {
+            fs.unlinkSync(param.file);
         } else {
-            fs.rmdirSync(fileFolder);
+            fs.rmdirSync(param.file, {recursive: param.recursive});
         }
     }
 

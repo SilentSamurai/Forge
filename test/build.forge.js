@@ -52,7 +52,10 @@ scripts = {
             build: {
                 path: "",
                 sh: {
-                    update_deps: 'echo "mvn version"',
+                    update_deps: {
+                        cmd: 'echo "mvn version"',
+                        ignoreError: true
+                    },
                     install: 'echo "mvn clean install"',
                 }
             },
@@ -79,7 +82,10 @@ scripts = {
                     from: "new-cp/settings.xml",
                     to: "settings-cp.xml"
                 },
-                rm: "settings-cp.xml"
+                rm: {
+                    file: "settings-cp.xml",
+                    recursive: false
+                }
             }
         }
     },
