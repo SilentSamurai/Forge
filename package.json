@@ -9,8 +9,8 @@
         "package": "pkg . --force-overwrite ",
         "global-install": "node global-install.js",
         "update-forge": "npm run build && npm run package && npm run global-install",
-        "main": "ts-node src/main.ts yaml test/build.yaml -v test/values.yaml",
-        "scriptJs": "ts-node src/main.ts build test/build.forge.js -p Deployment,Apple",
+        "main": "ts-node src/main.ts build scriptA -p Deployment,Apple -f test/build.forge.js",
+        "scriptJs": "ts-node src/main.ts build scriptA -f test/build.forge.js -p Deployment,Apple",
         "jenkins-install": "ts-node src/main.ts build setup-jenkins.forge.js "
     },
     "pkg": {
@@ -46,11 +46,14 @@
         "@types/js-yaml": "^4.0.5",
         "chalk": "^4.1.2",
         "commander": "^8.3.0",
+        "copy": "^0.3.2",
         "copyfiles": "^2.4.1",
         "dateformat": "^4.6.3",
         "handlebars": "^4.7.7",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.1",
-        "quoted-string-space-split": "^1.0.0"
+        "mv": "^2.1.1",
+        "quoted-string-space-split": "^1.0.0",
+        "reflect-metadata": "^0.1.13"
     }
 }

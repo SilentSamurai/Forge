@@ -1,3 +1,6 @@
+const sh = fg.sh;
+const cd = fg.cd;
+
 async function clone() {
     await sh('echo "git config something"');
     await sh('echo "git clone something"');
@@ -7,9 +10,9 @@ async function clone() {
 async function ModuleA() {
     await cd("");
     await sh("echo apple-pei");
-    await set_env("Apple", "pie");
+    await fg.env_set("Apple", "pie");
 
-    if (profile("Deployment")) {
+    if (fg.profile("Deployment")) {
         await sh("echo Deployment");
     }
 
@@ -36,31 +39,51 @@ async function ModuleA() {
 // await ModuleA();
 // ModuleA()
 
-pipeline = {
-    environment: {
-        GIT_USERNAME: cred("GIT_USERNAME"),
-    },
-    steps: {
-        clone: {
-            custom: ModuleA
+scripts = {
+
+    scriptA: {
+        environment: {
+            GIT_USERNAME: fg.cred("GIT_USERNAME"),
         },
-        build: {
-            path: "",
-            sh: {
-                update_deps: 'echo "mvn version"',
-                install: 'echo "mvn clean install"',
-            }
-        },
-        push: {
-            windows: {
-                sh: "echo windows"
+        steps: {
+            clone: {
+                custom: ModuleA
             },
-            linux: {
-                sh: "echo linux"
+            build: {
+                path: "",
+                sh: {
+                    update_deps: 'echo "mvn version"',
+                    install: 'echo "mvn clean install"',
+                }
             },
-            darwin: {
-                sh: "echo darwin"
+            push: {
+                sh: "echo windows",
+                windows: {
+                    sh: "echo windows"
+                },
+                linux: {
+                    sh: "echo linux"
+                },
+                darwin: {
+                    sh: "echo darwin"
+                }
+            },
+            copy: {
+                path: ".",
+                sh: "echo pwd ",
+                cp: {
+                    from: "settings.xml",
+                    to: "new-cp"
+                },
+                mv: {
+                    from: "new-cp/settings.xml",
+                    to: "settings-cp.xml"
+                },
+                rm: "settings-cp.xml"
             }
         }
-    }
+    },
+
+    scriptB: {}
+
 }
