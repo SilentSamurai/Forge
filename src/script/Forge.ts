@@ -2,7 +2,7 @@ import {CommonUtil} from "../utility/commons";
 import {Operations} from "../operations/operations";
 import {ExecutionOutput} from "../utility/utility";
 import {Logger} from "../logging/Logger";
-import {Pipeline} from "../models/pipeline";
+import {Build} from "../models/build";
 import {PipelineHelper, PipelineProcessor} from "./helpers";
 
 const logger = Logger.getLogger("Forge");
@@ -49,7 +49,7 @@ function cred(id: string): string {
     return id;
 }
 
-let pipeline: Pipeline;
+let build: Build;
 
 
 PipelineProcessor.TASKS.set("path", cd);
@@ -78,11 +78,11 @@ export async function executeScript(buildScript: string, profileString: string) 
         // logger.info(scriptJs);
 
         const output = eval(scriptJs);
-        logger.info("Pipeline ", pipeline)
+        logger.info("Pipeline ", build)
 
-        if (pipeline != null) {
+        if (build != null) {
             let pipelineProcessor = new PipelineProcessor();
-            await pipelineProcessor.processPipeline(pipeline);
+            await pipelineProcessor.processPipeline(build);
         }
 
 

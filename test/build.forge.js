@@ -36,7 +36,7 @@ async function ModuleA() {
 // await ModuleA();
 // ModuleA()
 
-pipeline = {
+build = {
     environment: {
         GIT_USERNAME: cred("GIT_USERNAME"),
     },

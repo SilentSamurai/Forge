@@ -1,4 +1,4 @@
-import {CustomStep, Pipeline, ProfileStep, Step, Tasks} from "../models/pipeline";
+import {Build, CustomStep, ProfileStep, Step, Tasks} from "../models/build";
 import {Logger} from "../logging/Logger";
 import {Context} from "../interfaces/Context";
 import {CommonUtil} from "../utility/commons";
@@ -100,7 +100,7 @@ export class PipelineProcessor {
     }
 
 
-    async processPipeline(pipeline: Pipeline) {
+    async processPipeline(pipeline: Build) {
         for (const env in pipeline.environment) {
             await Operations.set_env(PipelineHelper.context, env, pipeline.environment[env])
         }

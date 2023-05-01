@@ -25,7 +25,7 @@ export interface Steps {
     [key: string]: Step;
 }
 
-export interface Pipeline {
+export interface Build {
     environment: Environment;
     steps: Steps;
 }
