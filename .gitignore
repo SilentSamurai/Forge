@@ -108,3 +108,5 @@ dist
 
 build
 bin
+/test/.gradle/
+/package-lock.json

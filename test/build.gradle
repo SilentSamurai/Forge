@@ -11,11 +11,11 @@ class GreetingPlugin implements Plugin<Project> {
 
     void apply(Project project) {
         // Add the 'greeting' extension object
-        def extension = project.extensions.create('greeting', GreetingPluginExtension)
+        def extension = project.extensions.create('scripts', GreetingPluginExtension)
         // Add a task that uses configuration from the extension object
-        project.task('hello') {
+        project.task('build') {
             doLast {
-                println extension.message
+                println extension
             }
         }
     }
@@ -24,21 +24,19 @@ class GreetingPlugin implements Plugin<Project> {
 apply plugin: GreetingPlugin
 
 // Configure the extension
-greeting.message = 'Hi from Gradle'
+// greeting.message = 'Hi from Gradle'
 
-
-
-task upper {
-    doLast{
-        String expString = 'TUTORIALS point'
-        println "Original: " + expString
-        println "Upper case: " + expString.toUpperCase()
-
-
-        def output = exec {
-                commandLine "echo", "Hello world!"
+scripts {
+    normal {
+        steps "gen" {
+            sh "generate some cde"
+            sh "hapeinasif"
+            mv {
+                from "from Folder"
+                to "some other folder"
             }
-        println output
+            rm "some folder"
+        }
     }
 
 }
